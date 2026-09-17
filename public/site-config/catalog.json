@@ -50,6 +50,10 @@
     {
       "id": "calculator",
       "label": "Calculator"
+    },
+    {
+      "id": "admin",
+      "label": "Admin Panel"
     }
   ],
   "defaults": {
@@ -65,7 +69,8 @@
       "speedbot",
       "copy_trading",
       "analysis_tools",
-      "calculator"
+      "calculator",
+      "admin"
     ],
     "colors": {
       "primary": "#059669",
