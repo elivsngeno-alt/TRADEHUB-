@@ -253,7 +253,7 @@ export const generateOAuthURL = async (prompt?: string) => {
         // Deriv OAuth uses the OAuth client id for authorization, while the
         // WebSocket API also needs the numeric application id. Keep both values
         // aligned when the site registry does not define a per-site legacy id.
-        const appId = site.legacy_app_id || process.env.DERIV_APP_ID || process.env.APP_ID;
+        const appId = site.legacy_app_id;
         if (appId) oauthUrl.searchParams.set('app_id', appId);
 
         return oauthUrl.toString();
