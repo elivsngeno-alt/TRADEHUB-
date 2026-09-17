@@ -4,6 +4,7 @@
   "framework": null,
   "rewrites": [
     { "source": "/callback", "destination": "/index.html" },
+    { "source": "/callback/", "destination": "/index.html" },
     { "source": "/((?!api/).*)", "destination": "/index.html" }
   ]
 }
