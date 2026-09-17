@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "site_id": "kicktrade",
+  "navigation": [
+    "dashboard",
+    "free_bots",
+    "bot_builder",
+    "auto_trader",
+    "manual_trading",
+    "tradingview",
+    "bulk_trader",
+    "batch_trader",
+    "speedbot",
+    "copy_trading",
+    "analysis_tools",
+    "calculator"
+  ],
+  "colors": {
+    "primary": "#4008c4",
+    "secondary": "#19cba3",
+    "nav_background": "#1178ee",
+    "nav_text": "#fafff5",
+    "header_background": "#181616"
+  }
+}

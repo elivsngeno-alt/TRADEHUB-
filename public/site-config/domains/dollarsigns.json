@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "site_id": "dollarsigns",
+  "navigation": [
+    "dashboard",
+    "manual_trading",
+    "bot_builder",
+    "free_bots",
+    "auto_trader",
+    "tradingview",
+    "bulk_trader",
+    "speedbot",
+    "copy_trading",
+    "analysis_tools",
+    "calculator",
+    "batch_trader"
+  ],
+  "colors": {
+    "primary": "#020093",
+    "secondary": "#32c759",
+    "nav_background": "#151d26",
+    "nav_text": "#f3f6f8",
+    "header_background": "#ffffff"
+  }
+}

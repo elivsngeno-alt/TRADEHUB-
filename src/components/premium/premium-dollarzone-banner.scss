@@ -1,0 +1,203 @@
+.elisy-dollarzone-banner {
+    position: relative;
+    width: 100%;
+    margin-bottom: 16px;
+    padding: 20px 24px;
+    background: linear-gradient(135deg, #09131a 0%, #11222c 50%, #0d1a22 100%);
+    border: 1.5px solid rgba(33, 220, 163, 0.4);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35), 0 0 24px rgba(33, 220, 163, 0.15);
+}
+
+.elisy-dollarzone-banner__glow {
+    position: absolute;
+    top: -50%;
+    left: -20%;
+    width: 140%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(33, 220, 163, 0.12) 0%, rgba(16, 185, 129, 0) 65%);
+    pointer-events: none;
+}
+
+.elisy-dollarzone-banner__content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        text-align: center;
+        gap: 16px;
+    }
+}
+
+.elisy-dollarzone-banner__lion-col {
+    flex: 0 0 auto;
+}
+
+.elisy-dollarzone-banner__lion-frame {
+    position: relative;
+    width: 96px;
+    height: 96px;
+    border-radius: 20px;
+    padding: 3px;
+    background: linear-gradient(135deg, #21dca3 0%, #f59e0b 50%, #10b981 100%);
+    box-shadow: 0 0 25px rgba(33, 220, 163, 0.4), 0 0 50px rgba(245, 158, 11, 0.25);
+    animation: elisyLionGlow 3s infinite alternate ease-in-out;
+}
+
+@keyframes elisyLionGlow {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 20px rgba(33, 220, 163, 0.3), 0 0 40px rgba(245, 158, 11, 0.2);
+    }
+    100% {
+        transform: scale(1.04);
+        box-shadow: 0 0 32px rgba(33, 220, 163, 0.6), 0 0 60px rgba(245, 158, 11, 0.4);
+    }
+}
+
+.elisy-dollarzone-banner__lion-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 17px;
+    object-fit: cover;
+    display: block;
+}
+
+.elisy-dollarzone-banner__lion-crown-svg {
+    position: absolute;
+    top: -16px;
+    right: -12px;
+    width: 36px;
+    height: 36px;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6));
+}
+
+.elisy-dollarzone-banner__text-col {
+    flex: 1;
+    min-width: 0;
+}
+
+.elisy-dollarzone-banner__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 8px;
+
+    @media (max-width: 768px) {
+        justify-content: center;
+    }
+}
+
+.elisy-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+
+    &--green {
+        background: rgba(33, 220, 163, 0.15);
+        color: #21dca3;
+        border: 1px solid rgba(33, 220, 163, 0.35);
+    }
+
+    &--gold {
+        background: rgba(245, 158, 11, 0.15);
+        color: #fbbf24;
+        border: 1px solid rgba(245, 158, 11, 0.35);
+    }
+
+    &--dark {
+        background: rgba(255, 255, 255, 0.08);
+        color: #e2e8f0;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+}
+
+.elisy-dollarzone-banner__title {
+    margin: 0 0 6px;
+    font-size: 26px;
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    color: #f8fafc;
+    text-transform: uppercase;
+
+    @media (max-width: 768px) {
+        font-size: 20px;
+    }
+}
+
+.elisy-text-gradient {
+    background: linear-gradient(135deg, #21dca3 0%, #34d399 50%, #f59e0b 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.elisy-dollarzone-banner__subtitle {
+    margin: 0 0 12px;
+    font-size: 13px;
+    color: #94a3b8;
+    line-height: 1.45;
+}
+
+.elisy-dollarzone-banner__stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+
+    @media (max-width: 768px) {
+        justify-content: center;
+    }
+}
+
+.elisy-stat-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    font-size: 12px;
+    color: #cbd5e1;
+
+    &__dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #21dca3;
+
+        &.green-pulse {
+            box-shadow: 0 0 8px #21dca3;
+            animation: pulseDot 1.8s infinite;
+        }
+    }
+
+    &__icon {
+        font-size: 13px;
+    }
+
+    &__label {
+        color: #94a3b8;
+    }
+
+    strong {
+        color: #f8fafc;
+        font-weight: 700;
+    }
+}
+
+@keyframes pulseDot {
+    0% { transform: scale(0.95); opacity: 0.8; }
+    50% { transform: scale(1.25); opacity: 1; }
+    100% { transform: scale(0.95); opacity: 0.8; }
+}
