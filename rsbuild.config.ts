@@ -30,6 +30,7 @@ export default defineConfig({
                 CLIENT_ID: JSON.stringify(process.env.CLIENT_ID),
                 APP_ID: JSON.stringify(process.env.APP_ID),
                 DERIV_APP_ID: JSON.stringify(process.env.DERIV_APP_ID || process.env.APP_ID),
+                DERIV_CLIENT_ID: JSON.stringify(process.env.DERIV_CLIENT_ID || process.env.CLIENT_ID || process.env.DERIV_APP_ID || process.env.APP_ID),
                 ADMIN_EMAIL: JSON.stringify(process.env.ADMIN_EMAIL),
                 ADMIN_EMAILS: JSON.stringify(process.env.ADMIN_EMAILS),
                 ADMIN_PASSWORD: JSON.stringify(process.env.ADMIN_PASSWORD),
