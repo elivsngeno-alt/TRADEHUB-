@@ -47,7 +47,7 @@ export const isLocal = () => /^(localhost|127\.0\.0\.1)(:\d+)?$/i.test(
 
 const getDefaultServerURL = () => {
     const site = resolveSiteConfig();
-    const appId = site?.legacy_app_id || '1089';
+    const appId = site?.legacy_app_id || process.env.DERIV_APP_ID || process.env.APP_ID || '1089';
     return `wss://ws.derivws.com/websockets/v3?app_id=${appId}&l=EN&brand=deriv`;
 };
 
