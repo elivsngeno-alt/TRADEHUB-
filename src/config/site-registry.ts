@@ -62,7 +62,7 @@ export const resolveSiteConfig = (hostname?: string): SiteOAuthConfig | undefine
         hosts: [currentHost],
         display_domain: currentHost,
         website_url: typeof window !== 'undefined' ? window.location.origin : 'https://' + currentHost,
-        redirect_uri: typeof window !== 'undefined' ? window.location.origin : 'https://' + currentHost,
+        redirect_uri: typeof window !== 'undefined' ? `${window.location.origin}/callback` : `https://${currentHost}/callback`,
         client_id: process.env.CLIENT_ID || '34675xfHsqnpagJ0dHq28',
         legacy_app_id: process.env.DERIV_APP_ID || process.env.APP_ID || '1089',
         scopes: ['trade', 'application_read'],

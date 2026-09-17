@@ -237,7 +237,9 @@ export const generateOAuthURL = async (prompt?: string) => {
         sessionStorage.setItem('oauth_site_id', site.id);
         sessionStorage.setItem('oauth_redirect_uri', site.redirect_uri);
 
-        const oauthUrl = new URL('auth', authBase);
+        // Deriv's authorization endpoint is /oauth2/authorize. Using /auth returns
+  // Deriv's "We couldn't find that page" screen before login can start.
+  const oauthUrl = new URL('authorize', authBase);
         oauthUrl.searchParams.set('response_type', 'code');
         oauthUrl.searchParams.set('client_id', site.client_id);
         oauthUrl.searchParams.set('redirect_uri', site.redirect_uri);
