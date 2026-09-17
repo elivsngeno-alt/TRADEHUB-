@@ -9,8 +9,14 @@ import './admin-panel.scss';
 
 type AdminTab = 'users' | 'earnings' | 'branding' | 'risk' | 'bots' | 'api' | 'diagnostics';
 
-const ENV_ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'bethanyhellen210@gmail.com';
-const ENV_ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin';
+const ADMIN_EMAILS = [
+    process.env.ADMIN_EMAIL,
+    ...(process.env.ADMIN_EMAILS || '').split(','),
+]
+    .map(value => value?.trim().toLowerCase())
+    .filter((value): value is string => Boolean(value));
+const ENV_ADMIN_EMAIL = ADMIN_EMAILS[0] || '';
+const ENV_ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '';
 
 interface AdminPanelPageProps {
     onExit?: () => void;
@@ -120,8 +126,8 @@ export const AdminPanelPage: React.FC<AdminPanelPageProps> = observer(({ onExit 
         if (!email) return setAuthError('Please enter admin email.');
         if (!pass) return setAuthError('Please enter admin password.');
 
-        const isEmailValid = email.toLowerCase() === ENV_ADMIN_EMAIL.toLowerCase() || email.toLowerCase() === 'bethanyhellen210@gmail.com';
-        const isPassValid = pass === ENV_ADMIN_PASSWORD || pass === 'admin';
+        const isEmailValid = ADMIN_EMAILS.includes(email.toLowerCase());
+        const isPassValid = Boolean(ENV_ADMIN_PASSWORD) && pass === ENV_ADMIN_PASSWORD;
 
         if (isEmailValid && isPassValid) {
             setIsUnlocked(true);
