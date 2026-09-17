@@ -47,7 +47,7 @@ export const isLocal = () => /^(localhost|127\.0\.0\.1)(:\d+)?$/i.test(
 
 const getDefaultServerURL = () => {
     const site = resolveSiteConfig();
-    const appId = site?.legacy_app_id || '1089';
+    const appId = site?.legacy_app_id || process.env.DERIV_APP_ID || process.env.APP_ID || '1089';
     return `wss://ws.derivws.com/websockets/v3?app_id=${appId}&l=EN&brand=deriv`;
 };
 
@@ -247,7 +247,12 @@ export const generateOAuthURL = async (prompt?: string) => {
         oauthUrl.searchParams.set('code_challenge_method', 'S256');
 
         if (prompt) oauthUrl.searchParams.set('prompt', prompt);
-        if (site.legacy_app_id) oauthUrl.searchParams.set('app_id', site.legacy_app_id);
+
+        // Deriv OAuth uses the OAuth client id for authorization, while the
+        // WebSocket API also needs the numeric application id. Keep both values
+        // aligned when the site registry does not define a per-site legacy id.
+        const appId = site.legacy_app_id || process.env.DERIV_APP_ID || process.env.APP_ID;
+        if (appId) oauthUrl.searchParams.set('app_id', appId);
 
         return oauthUrl.toString();
     } catch (error) {

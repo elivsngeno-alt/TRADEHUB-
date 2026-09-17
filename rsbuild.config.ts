@@ -29,6 +29,7 @@ export default defineConfig({
                 APP_ENV: JSON.stringify(process.env.APP_ENV),
                 CLIENT_ID: JSON.stringify(process.env.CLIENT_ID),
                 APP_ID: JSON.stringify(process.env.APP_ID),
+                DERIV_APP_ID: JSON.stringify(process.env.DERIV_APP_ID || process.env.APP_ID),
                 GD_CLIENT_ID: JSON.stringify(process.env.GD_CLIENT_ID),
                 GD_APP_ID: JSON.stringify(process.env.GD_APP_ID),
                 GD_API_KEY: JSON.stringify(process.env.GD_API_KEY),
