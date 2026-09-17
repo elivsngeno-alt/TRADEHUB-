@@ -9,15 +9,31 @@ import './admin-panel.scss';
 
 type AdminTab = 'users' | 'earnings' | 'branding' | 'risk' | 'bots' | 'api' | 'diagnostics';
 
-const ENV_ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'bethanyhellen210@gmail.com';
-const ENV_ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin';
+const ADMIN_EMAILS = [
+    process.env.ADMIN_EMAIL,
+    ...(process.env.ADMIN_EMAILS || '').split(','),
+]
+    .map(value => value?.trim().toLowerCase())
+    .filter((value): value is string => Boolean(value));
+const ENV_ADMIN_EMAIL = ADMIN_EMAILS[0] || '';
+const ADMIN_SESSION_KEY = 'admin_authenticated_until';
+const ADMIN_SESSION_TTL_MS = 30 * 60 * 1000;
+
+const getAdminSessionExpiry = () => {
+    const expiry = Number(sessionStorage.getItem(ADMIN_SESSION_KEY) || 0);
+    return Number.isFinite(expiry) && expiry > Date.now() ? expiry : 0;
+};
 
 interface AdminPanelPageProps {
     onExit?: () => void;
 }
 
 export const AdminPanelPage: React.FC<AdminPanelPageProps> = observer(({ onExit }) => {
-    const [isUnlocked, setIsUnlocked] = useState(() => localStorage.getItem('admin_authenticated') === 'true' || localStorage.getItem('admin_unlocked') === 'true');
+    const [isUnlocked, setIsUnlocked] = useState(() => {
+        localStorage.removeItem('admin_authenticated');
+        localStorage.removeItem('admin_unlocked');
+        return Boolean(getAdminSessionExpiry());
+    });
     const [adminEmailInput, setAdminEmailInput] = useState(() => localStorage.getItem('admin_email_login') || ENV_ADMIN_EMAIL);
     const [adminPassInput, setAdminPassInput] = useState('');
     const [authError, setAuthError] = useState('');
@@ -120,13 +136,13 @@ export const AdminPanelPage: React.FC<AdminPanelPageProps> = observer(({ onExit 
         if (!email) return setAuthError('Please enter admin email.');
         if (!pass) return setAuthError('Please enter admin password.');
 
-        const isEmailValid = email.toLowerCase() === ENV_ADMIN_EMAIL.toLowerCase() || email.toLowerCase() === 'bethanyhellen210@gmail.com';
-        const isPassValid = pass === ENV_ADMIN_PASSWORD || pass === 'admin';
+        const isEmailValid = ADMIN_EMAILS.includes(email.toLowerCase());
+        const configuredPassword = process.env.ADMIN_PASSWORD || '';
+        const isPassValid = Boolean(configuredPassword) && pass === configuredPassword;
 
         if (isEmailValid && isPassValid) {
             setIsUnlocked(true);
-            localStorage.setItem('admin_authenticated', 'true');
-            localStorage.setItem('admin_unlocked', 'true');
+            sessionStorage.setItem(ADMIN_SESSION_KEY, String(Date.now() + ADMIN_SESSION_TTL_MS));
             localStorage.setItem('admin_email_login', email);
             setAuthError('');
             window.dispatchEvent(new CustomEvent('admin_config_updated'));
@@ -138,6 +154,7 @@ export const AdminPanelPage: React.FC<AdminPanelPageProps> = observer(({ onExit 
 
     const handleLock = () => {
         setIsUnlocked(false);
+        sessionStorage.removeItem(ADMIN_SESSION_KEY);
         localStorage.removeItem('admin_authenticated');
         localStorage.removeItem('admin_unlocked');
         window.dispatchEvent(new CustomEvent('admin_config_updated'));
@@ -286,7 +303,7 @@ export const AdminPanelPage: React.FC<AdminPanelPageProps> = observer(({ onExit 
                     </p>
 
                     <div style={{ padding: '8px 12px', background: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.3)', borderRadius: 8, fontSize: 11, color: '#10b981', marginBottom: 18, textAlign: 'center', fontWeight: 600 }}>
-                        ✓ Detected Admin Email: {ENV_ADMIN_EMAIL}
+                        Configured administrator: {ENV_ADMIN_EMAIL || 'Set ADMIN_EMAIL in deployment variables'}
                     </div>
 
                     <form onSubmit={handleUnlock} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -313,17 +330,6 @@ export const AdminPanelPage: React.FC<AdminPanelPageProps> = observer(({ onExit 
                         {authError && <div style={{ color: '#f87171', fontSize: 13, fontWeight: 600 }}>⚠ {authError}</div>}
                         <button type='submit' style={{ width: '100%', padding: '14px', borderRadius: 8, border: 'none', background: '#10b981', color: '#ffffff', fontWeight: 800, fontSize: 15, cursor: 'pointer', transition: 'background 0.2s', boxShadow: '0 4px 14px rgba(16, 185, 129, 0.3)' }}>
                             🔑 Sign In to Admin Console
-                        </button>
-                        <button
-                            type='button'
-                            onClick={() => {
-                                setAdminEmailInput(ENV_ADMIN_EMAIL);
-                                setAdminPassInput(ENV_ADMIN_PASSWORD);
-                                setAuthError('');
-                            }}
-                            style={{ background: 'none', border: '1px dashed #10b981', color: '#10b981', padding: '10px', borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: 'pointer' }}
-                        >
-                            ⚡ Auto-Fill Detected Credentials
                         </button>
                     </form>
                 </div>

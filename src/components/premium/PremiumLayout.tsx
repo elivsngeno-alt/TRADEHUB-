@@ -90,7 +90,8 @@ const PremiumLayout = observer(() => {
     const isOAuthCallback = Boolean(params.get('code') && params.get('state'));
     const hasStoredAuth = OAuthTokenExchangeService.isAuthenticated();
     const runtimeAuthenticated = Boolean(activeLoginid || client?.is_logged_in);
-    const isAdminAuth = localStorage.getItem('admin_authenticated') === 'true';
+    const adminSessionExpiry = Number(sessionStorage.getItem('admin_authenticated_until') || 0);
+    const isAdminAuth = Number.isFinite(adminSessionExpiry) && adminSessionExpiry > Date.now();
     const isAuthenticated = Boolean(runtimeAuthenticated || hasStoredAuth || guestSessionActive || isAdminAuth || isLocalDevelopmentHost());
 
     useEffect(() => { document.title = getTemplateDomain(); }, []);
