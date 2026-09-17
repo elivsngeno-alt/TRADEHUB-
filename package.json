@@ -152,7 +152,7 @@
         "stylelint-selector-bem-pattern": "^4.0.0",
         "ts-jest": "^29.1.2",
         "tsconfig-paths-webpack-plugin": "^4.1.0",
-        "typescript": "^5.5.3",
+        "typescript": "^5.9.3",
         "url": "^0.11.3",
         "webpack": "^5.92.1",
         "webpack-cli": "^5.1.4",
